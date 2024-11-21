@@ -381,7 +381,10 @@ keyword k = Trifecta.position <* Trifecta.try (Trifecta.reserve keywordStyle k)
 
 variable :: (Monad m, TokenParsing m) => m Var
 variable =
-  Var <$> (NonEmpty.fromList <$> Trifecta.sepBy1 identifier (Trifecta.char '.'))
+  Var <$> (NonEmpty.fromList <$> Trifecta.sepBy1 identifierWithNumeric (Trifecta.char '.'))
+
+identifierWithNumeric :: (Monad m, TokenParsing m) => m Id
+identifierWithNumeric = Trifecta.ident variableStyleWithNumeric
 
 identifier :: (Monad m, TokenParsing m) => m Id
 identifier = Trifecta.ident variableStyle

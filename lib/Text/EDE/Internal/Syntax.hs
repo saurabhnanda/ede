@@ -16,6 +16,7 @@
 -- preconditions expected by public modules. Use at your own risk!
 module Text.EDE.Internal.Syntax where
 
+import Control.Applicative ((<|>))
 import Control.Lens ((.~))
 import Data.Function ((&))
 import Data.HashSet (HashSet)
@@ -77,6 +78,10 @@ operatorStyle =
 variableStyle :: TokenParsing m => IdentifierStyle m
 variableStyle =
   keywordStyle & Trifecta.styleName .~ "variable"
+
+variableStyleWithNumeric :: TokenParsing m => IdentifierStyle m
+variableStyleWithNumeric =
+  keywordStyle & Trifecta.styleStart .~ (Trifecta.alphaNum <|> Trifecta.char '_')
 
 keywordStyle :: TokenParsing m => IdentifierStyle m
 keywordStyle =
